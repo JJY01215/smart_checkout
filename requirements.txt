@@ -1,0 +1,7 @@
+Flask==2.3.2
+tensorflow==2.10.1
+keras==2.10.0
+opencv-python==4.8.0.76
+pandas==2.1.4
+pillow==10.2.0
+ultralytics==8.0.208
