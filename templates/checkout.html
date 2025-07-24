@@ -1,0 +1,77 @@
+ # 顯示完整帳單與下載
+ <!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>結帳確認 - 智慧結帳系統</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding: 30px; background-color: #f2f2f2; }
+        .summary-table th, .summary-table td { text-align: center; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="mb-4 text-center">💳 結帳確認</h2>
+
+    <!-- 購物明細 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>🛒 商品清單</h5>
+            <table class="table table-bordered summary-table">
+                <thead class="table-light">
+                    <tr>
+                        <th>商品名稱</th>
+                        <th>數量</th>
+                        <th>單價</th>
+                        <th>小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for name, item in items.items() %}
+                    <tr>
+                        <td>{{ name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.price }}</td>
+                        <td>${{ item.subtotal }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr class="table-success">
+                        <th colspan="3">總金額</th>
+                        <th>${{ total }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- 付款方式 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>💰 請選擇付款方式</h5>
+            <form method="POST" action="{{ url_for('confirm_payment') }}">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_method" value="cash" id="cash" required>
+                    <label class="form-check-label" for="cash">現金</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_method" value="credit_card" id="credit_card">
+                    <label class="form-check-label" for="credit_card">信用卡</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_method" value="mobile_pay" id="mobile_pay">
+                    <label class="form-check-label" for="mobile_pay">行動支付</label>
+                </div>
+
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-success">✅ 確認付款</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">← 回首頁</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
